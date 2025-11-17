@@ -1,0 +1,659 @@
+<!-- Guarda esto como index.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Corta-Fácil Pro — La precisión de siempre</title>
+  <meta name="description" content="Corta-Fácil Pro: cuchillos profesionales con mango ergonómico extra-antideslizante. Calidad, durabilidad y confort para cocinar todos los días.">
+
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050505;
+      --panel:#0d0d0d;
+      --muted:#bdbdbd;
+      --white:#ffffff;
+      --accent:#efefef;
+      --glass: rgba(255,255,255,0.04);
+      --radius:12px;
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#020202 80%);
+      color:var(--white);
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
+
+    /* Header */
+    header{
+      position:fixed;
+      top:0; left:0; right:0;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:14px 6%;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      z-index:100;
+    }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .logo {
+      width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+      border-radius:10px; background:transparent;
+    }
+    .brand h1{ margin:0; font-size:16px; letter-spacing:1px; font-weight:700; }
+    nav { display:flex; gap:14px; align-items:center; }
+    nav a{ color:var(--accent); text-decoration:none; font-weight:600; opacity:0.95 }
+    .cta{ background:rgba(255,255,255,0.06); padding:10px 14px; border-radius:10px; text-decoration:none; color:var(--white); font-weight:700; border:1px solid rgba(255,255,255,0.06); }
+    .cta:hover{ transform:translateY(-3px) }
+
+    main{ padding-top:86px; }
+
+    /* Hero */
+    .hero{
+      display:flex; gap:40px; align-items:center; padding:64px 6%; min-height:520px;
+    }
+    .hero-left{ max-width:640px; animation: fadeUp .7s ease both; }
+    .eyebrow{ color:var(--muted); text-transform:uppercase; font-size:12px; letter-spacing:2px;}
+    h2{ margin:14px 0 18px 0; font-size:44px; line-height:1.05; font-weight:800; color:var(--white); }
+    .lead{ color:var(--muted); max-width:540px; font-size:16px; margin-bottom:22px; }
+    .hero-cta{ display:flex; gap:12px; align-items:center; }
+
+    .btn{
+      background:#111; border:1px solid rgba(255,255,255,0.06); padding:12px 18px; border-radius:10px; color:var(--white); text-decoration:none; font-weight:700;
+      transition: all var(--transition);
+    }
+    .btn.secondary{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.06); }
+    .btn:hover{ transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.6); }
+
+    .hero-right{ flex:1; display:flex; justify-content:center; align-items:center; animation: fadeIn .7s .15s both; }
+    .hero-image{ max-width:720px; width:100%; border-radius:16px; box-shadow: 0 30px 60px rgba(0,0,0,0.7); overflow:hidden; border:1px solid rgba(255,255,255,0.03); }
+
+    /* Products */
+    .products{ padding:72px 6%; border-top:1px solid rgba(255,255,255,0.03); }
+    .section-title{ font-size:28px; font-weight:700; margin-bottom:18px; color:var(--white) }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; align-items:start; }
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.03); transition: transform var(--transition), box-shadow var(--transition); display:flex; flex-direction:column; min-height:320px; }
+    .card:hover{ transform: translateY(-8px); box-shadow: 0 40px 80px rgba(0,0,0,0.7); }
+    .card img{ width:100%; height:170px; object-fit:contain; filter:grayscale(100%) contrast(1.02); background:transparent; }
+    .card h3{ margin:12px 0 6px 0; font-size:18px; }
+    .price{ color:var(--muted); font-weight:700; margin-bottom:10px; }
+
+    /* Cart */
+    .mini-cart{ position:fixed; right:20px; bottom:20px; width:360px; max-width:calc(100% - 40px); border-radius:14px; background:linear-gradient(180deg,#0c0c0c,#0a0a0a); padding:12px; border:1px solid rgba(255,255,255,0.04); box-shadow:0 30px 80px rgba(0,0,0,0.6); z-index:120; display:none;}
+    .mini-cart.show{ display:block; }
+    .mini-cart h4{ margin:0 0 8px 0; }
+    .cart-list{ max-height:260px; overflow:auto; margin-bottom:8px;}
+    .cart-item{ display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+    .cart-item img{ width:54px; height:42px; object-fit:cover; border-radius:8px; }
+
+    /* Info sections */
+    .info{ padding:72px 6%; display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center; border-top:1px solid rgba(255,255,255,0.03); }
+    .about p, .features ul{ color:var(--muted); font-size:15px; }
+    .features ul{ list-style:none; padding:0; }
+    .features li{ margin:12px 0; padding-left:18px; position:relative; }
+    .features li:before{ content:''; position:absolute; left:0; top:8px; width:8px;height:8px;border-radius:50%; background:var(--accent); opacity:0.14; }
+
+    /* Team */
+    .team{ padding:72px 6%; border-top:1px solid rgba(255,255,255,0.03); display:flex; gap:24px; justify-content:space-between; flex-wrap:wrap; }
+    .person{ background:var(--glass); padding:16px; border-radius:12px; width:260px; border:1px solid rgba(255,255,255,0.03); }
+    .person h4{ margin:6px 0 4px 0; color:var(--white) }
+    .person p{ margin:0; color:var(--muted) }
+
+    /* Contact & footer */
+    .contact{ padding:72px 6%; border-top:1px solid rgba(255,255,255,0.03); display:flex; gap:18px; align-items:center; flex-wrap:wrap; justify-content:space-between; }
+    .contact .box{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); width:320px; }
+    footer{ padding:36px 6%; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); text-align:center; }
+
+    /* Infographic simple */
+    .infographic{ width:100%; max-width:920px; margin-top:18px; border-radius:12px; overflow:hidden; }
+
+    /* Modal */
+    .modal-backdrop{ position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:200; opacity:0; pointer-events:none; transition:all var(--transition); }
+    .modal-backdrop.show{ opacity:1; pointer-events:auto; }
+    .modal{ width:600px; max-width:94%; padding:20px; border-radius:12px; background:linear-gradient(180deg,#0d0d0d,#0b0b0b); border:1px solid rgba(255,255,255,0.04); }
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{ flex-direction:column; padding:36px 6%; min-height:auto; gap:22px; }
+      .info{ grid-template-columns:1fr; }
+      header{ padding:12px 4%; }
+    }
+
+    /* animations */
+    @keyframes fadeUp{ from{ transform: translateY(12px); opacity:0 } to{ transform:none; opacity:1 } }
+    @keyframes fadeIn{ from{ opacity:0 } to{ opacity:1 } }
+    a { cursor:pointer; }
+    input, textarea{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--white); padding:10px; border-radius:8px; width:100%;}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- Simple SVG logo (black/white) -->
+        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo Corta-Fácil Pro">
+          <rect x="6" y="6" width="88" height="88" rx="14" fill="#fff" opacity="0.06"/>
+          <path d="M28 64 L50 28 L72 64 Z" fill="#fff"/>
+        </svg>
+      </div>
+      <div>
+        <h1 style="margin:0;">CORTA-FÁCIL PRO</h1>
+        <div style="font-size:12px; color:var(--muted); margin-top:2px;">La precisión de siempre, con la comodidad de hoy.</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#cuchillos">Cuchillos</a>
+      <a href="#caracteristicas">Características</a>
+      <a href="#sobre">Sobre nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a class="cta" id="open-cart">Carrito (0)</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="inicio" class="hero" aria-label="Inicio">
+      <div class="hero-left">
+        <div class="eyebrow">La precisión de siempre</div>
+        <h2>La precisión de siempre,<br>con la comodidad de hoy.</h2>
+        <p class="lead">CORTA-FÁCIL PRO son cuchillos de cocina de calidad profesional, fabricados en acero inoxidable de alta durabilidad con mangos ergonómicos extra-antideslizantes para reducir la fatiga en manos y muñecas. Diseñados pensando especialmente en personas que valoran la cocina tradicional y la comodidad.</p>
+
+        <div class="hero-cta">
+          <a href="#cuchillos" class="btn">Ver cuchillos</a>
+          <a href="#caracteristicas" class="btn secondary">Características</a>
+        </div>
+
+        <!-- Contacto rapido -->
+        <div style="margin-top:18px; color:var(--muted); font-size:14px;">
+          Instagram: <a href="https://www.instagram.com/cortafacil_pro" target="_blank" style="color:var(--white); text-decoration:underline;">@cortafacil_pro</a>
+        </div>
+
+        <!-- Reflexión breve (competencias digitales) -->
+        <div style="margin-top:18px; color:var(--muted); font-size:14px;">
+          <strong>Reflexión:</strong> Las competencias digitales fortalecen la identidad de Corta-Fácil Pro porque nos permiten diseñar contenido atractivo, comprender a nuestro público objetivo y comunicar confianza en línea. Uso responsable de herramientas digitales mejora la visibilidad y la credibilidad de la marca.
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-image" role="img" aria-label="Imagen portada">
+          <!-- Imagen de portada (puedes reemplazar por tu IA) -->
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Cuchillo profesional" style="width:100%; display:block;">
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section id="cuchillos" class="products" aria-label="Catálogo">
+      <div>
+        <div class="section-title">Nuestros cuchillos</div>
+        <div class="grid" id="productGrid">
+          <!-- 8 productos (estilo Apple; imágenes públicas como ejemplo) -->
+          <!-- Producto 1 -->
+          <article class="card" data-id="prod-1" data-name="Chef Pro 20" data-price="1200">
+            <img src="https://images.unsplash.com/photo-1581089781785-2e46a38f8b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Chef Pro 20">
+            <h3>Chef Pro 20</h3>
+            <div class="price">MX$1200</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Cuchillo Chef 20cm — acero inoxidable premium, mango extra-antideslizante.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-1">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 2 -->
+          <article class="card" data-id="prod-2" data-name="Santoku Comfort" data-price="950">
+            <img src="https://images.unsplash.com/photo-1586201375761-83865001f4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Santoku Comfort">
+            <h3>Santoku Comfort</h3>
+            <div class="price">MX$950</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Ideal para cortes precisos y limpieza fácil. Diseño ergonómico para minimizar esfuerzo.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-2">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 3 -->
+          <article class="card" data-id="prod-3" data-name="Utility Grip" data-price="700">
+            <img src="https://images.unsplash.com/photo-1600180758890-b79d9a78b6f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Utility Grip">
+            <h3>Utility Grip</h3>
+            <div class="price">MX$700</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Cuchillo multiusos compacto — ligereza y control para tareas del día a día.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-3">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 4 -->
+          <article class="card" data-id="prod-4" data-name="Pan Slicer" data-price="600">
+            <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Pan Slicer">
+            <h3>Pan Slicer</h3>
+            <div class="price">MX$600</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Sierra fina para pan y alimentos delicados. Mango antideslizante seguro.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-4">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 5 -->
+          <article class="card" data-id="prod-5" data-name="Precision Paring" data-price="300">
+            <img src="https://images.unsplash.com/photo-1612448355546-7fea8f9a7bdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Precision Paring">
+            <h3>Precision Paring</h3>
+            <div class="price">MX$300</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Cuchillo pequeño para pelar y detallar con máximo control.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-5">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 6 -->
+          <article class="card" data-id="prod-6" data-name="Pro Carving 18" data-price="1100">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Pro Carving">
+            <h3>Pro Carving 18</h3>
+            <div class="price">MX$1100</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Diseñado para lonchear carnes y cortes finos con precisión profesional.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-6">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 7 -->
+          <article class="card" data-id="prod-7" data-name="Chef Starter Kit" data-price="980">
+            <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Chef Starter Kit">
+            <h3>Chef Starter Kit</h3>
+            <div class="price">MX$980</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Kit básico (Chef + Utility) pensado para empezar a cocinar con confianza.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-7">Añadir al carrito</button>
+            </div>
+          </article>
+
+          <!-- Producto 8 -->
+          <article class="card" data-id="prod-8" data-name="Grip Comfort XL" data-price="420">
+            <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Grip Comfort XL">
+            <h3>Grip Comfort XL</h3>
+            <div class="price">MX$420</div>
+            <div class="desc" style="color:var(--muted); font-size:14px;">Mango extragrande para mayor sujeción y comodidad en manos con agarre comprometido.</div>
+            <div style="margin-top:12px;">
+              <button class="btn add-to-cart" data-id="prod-8">Añadir al carrito</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Info: Qué es y Características -->
+    <section id="caracteristicas" class="info" aria-label="Características">
+      <div class="features">
+        <div class="section-title">Características destacadas</div>
+        <ul>
+          <li>Mangos ergonómicos extra-antideslizantes: confort y seguridad en cada corte.</li>
+          <li>Acero inoxidable endurecido con recubrimiento anti-corrosión para mayor vida útil.</li>
+          <li>Diseño pensado para reducir la fatiga en manos y muñecas — ideal para adultos mayores.</li>
+          <li>Garantía de por vida en defectos de fabricación.</li>
+        </ul>
+      </div>
+
+      <div class="about">
+        <div class="section-title">Qué es y qué hace</div>
+        <p style="color:var(--muted);">CORTA-FÁCIL PRO es un juego de cuchillos de cocina diseñado para brindar precisión, seguridad y confort. Nuestras piezas combinan tradición en el corte con ergonomía moderna, ofreciendo un producto pensado para durar y facilitar la experiencia en la cocina diaria.</p>
+      </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section id="sobre" class="team" aria-label="Sobre nosotros">
+      <div style="max-width:60%;">
+        <div class="section-title">Nuestra historia</div>
+        <p style="color:var(--muted);">
+          Corta-Fácil Pro nació como respuesta a una necesidad clara: ofrecer cuchillos de alta calidad pensados para adultos mayores y personas que buscan seguridad y comodidad en la cocina. Fundada por Santiago Rojas, la marca se originó tras observar que muchas herramientas tradicionales generan fatiga y riesgo por diseños poco ergonómicos. Buscamos combinar acero de calidad con mangos diseñados para reducir el esfuerzo, mejorar el agarre y ofrecer confianza al cocinar. Con el apoyo del socio Abraham Hernández enfocamos la marca en durabilidad, responsabilidad y un uso sencillo para toda la familia.
+        </p>
+        <div style="margin-top:12px; color:var(--muted);">
+          <strong>Misión:</strong> Proveer herramientas de cocina seguras, duraderas y cómodas que permitan a las personas cocinar con confianza y sin fatiga. <br>
+          <strong>Visión:</strong> Ser la marca líder en soluciones ergonómicas de cocina en México, reconocida por su calidad y compromiso con el usuario. <br>
+          <strong>Valores:</strong> Calidad, Seguridad, Transparencia, Sostenibilidad y Ética en el uso de tecnologías.
+        </div>
+      </div>
+
+      <!-- Avatares generados (servicio público de avatars) -->
+      <div style="display:flex; gap:18px; flex-wrap:wrap;">
+        <div class="person" style="text-align:center;">
+          <img src="https://api.dicebear.com/6.x/adventurer/svg?seed=SantiagoRojas&scale=90&backgroundType=gradientLinear&eyebrow=variant01&hairColor=000000&skinColor=light" alt="Santiago Rojas" style="width:100%; border-radius:8px; background:#0b0b0b;">
+          <h4>Santiago Rojas</h4>
+          <p>Fundador y creador</p>
+        </div>
+
+        <div class="person" style="text-align:center;">
+          <img src="https://api.dicebear.com/6.x/adventurer/svg?seed=AbrahamHernandez&scale=90&backgroundType=gradientLinear&hairColor=000000&skinColor=light" alt="Abraham Hernández" style="width:100%; border-radius:8px; background:#0b0b0b;">
+          <h4>Abraham Hernández</h4>
+          <p>Socio importante</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENIDO DIGITAL -->
+    <section id="contenido" class="products" aria-label="Contenido digital">
+      <div>
+        <div class="section-title">Contenido digital</div>
+        <p style="color:var(--muted); margin-bottom:12px;">Materiales creados durante el semestre — abajo se muestra la imagen publicitaria (licencia: Copyright por Corta-Fácil Pro).</p>
+
+        <div style="display:flex; gap:18px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:300px;">
+            <!-- Imagen publicitaria (ejemplo con licencia Copyright de la marca) -->
+            <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80" alt="Publicidad Corta-Fácil Pro" style="width:100%; border-radius:12px; object-fit:cover; filter:grayscale(10%);">
+          </div>
+
+          <div style="flex:1; min-width:260px;">
+            <h4 style="margin-top:0;">Descripción</h4>
+            <p style="color:var(--muted);">Imagen publicitaria creada como recurso del proyecto. Herramienta: DALL·E / Unsplash (referencia de estilo). Licencia: Copyright de Corta-Fácil Pro — uso académico y comercial restringido según políticas internas.</p>
+
+            <h5 style="margin-top:12px;">Cita APA (ejemplo):</h5>
+            <p style="color:var(--muted); font-size:13px; margin:6px 0;">Corta-Fácil Pro. (2025). Imagen publicitaria de la línea Corta-Fácil Pro. Copyright Corta-Fácil Pro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGURIDAD Y BIENESTAR DIGITAL -->
+    <section id="seguridad" class="info" aria-label="Seguridad">
+      <div>
+        <div class="section-title">Aviso de privacidad (simulado)</div>
+        <p style="color:var(--muted);">En Corta-Fácil Pro respetamos su privacidad. Los datos personales que recabamos (nombre, teléfono, correo) se usan exclusivamente para la gestión de pedidos y atención al cliente. No compartimos datos con terceros sin su consentimiento. Conservamos la información el tiempo necesario para la relación comercial y de conformidad con la normativa aplicable.</p>
+
+        <h4 style="margin-top:12px;">Derechos del titular</h4>
+        <ul style="color:var(--muted);">
+          <li>Acceder a sus datos personales.</li>
+          <li>Rectificar datos inexactos.</li>
+          <li>Solicitar la eliminación o limitación del tratamiento cuando proceda.</li>
+          <li>Revocar el consentimiento en cualquier momento.</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="section-title">Seguridad y bienestar digital</div>
+        <p style="color:var(--muted);">Recomendamos prácticas para mantener su seguridad en línea:</p>
+        <ul style="color:var(--muted);">
+          <li>Usar contraseñas largas y únicas; preferir gestores de contraseñas.</li>
+          <li>Habilitar verificación en dos pasos en cuentas importantes.</li>
+          <li>Comprobar enlaces antes de hacer clic (phishing).</li>
+          <li>Limitar exposición de datos personales en redes.</li>
+        </ul>
+
+        <!-- Infografía SVG (simple y accesible) -->
+        <div class="infographic" aria-hidden="true" style="margin-top:12px;">
+          <svg viewBox="0 0 800 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <rect width="100%" height="100%" rx="12" fill="#0a0a0a" />
+            <g fill="#fff" font-family="Inter, Arial" font-size="14">
+              <text x="28" y="28" fill="#fff" font-weight="700">Bienestar y seguridad digital</text>
+              <text x="28" y="56" fill="#bdbdbd">Contraseñas seguras</text>
+              <circle cx="28" cy="86" r="10" fill="#fff" opacity="0.08" />
+              <text x="52" y="92" fill="#bdbdbd">Gestor de contraseñas</text>
+
+              <text x="300" y="56" fill="#bdbdbd">Verificación en dos pasos</text>
+              <rect x="300" y="64" width="12" height="12" rx="2" fill="#fff" opacity="0.08"/>
+              <text x="300" y="96" fill="#bdbdbd">Actívala en tus cuentas principales</text>
+
+              <text x="540" y="56" fill="#bdbdbd">Cuidado con enlaces</text>
+              <rect x="540" y="64" width="12" height="12" rx="2" fill="#fff" opacity="0.08"/>
+              <text x="540" y="96" fill="#bdbdbd">Verifica remitentes y URL</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section id="conclusion" style="padding:72px 6%; border-top:1px solid rgba(255,255,255,0.03);">
+      <div class="section-title">Conclusión personal</div>
+      <p style="color:var(--muted)">(Aquí va tu reflexión personal final — 150–200 palabras). Puedes reemplazar este párrafo por tu texto final cuando lo tengas.</p>
+
+      <div style="margin-top:12px; color:var(--muted);">
+        <strong>Herramientas e IA utilizadas:</strong> ChatGPT (OpenAI), DALL·E, Midjourney, Canva, Runway ML, y herramientas de edición y hosting (GitHub Pages / Netlify).
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="contact" aria-label="Contacto">
+      <div>
+        <div class="section-title">Contacto</div>
+        <p style="color:var(--muted); max-width:560px;">Para pedidos, cotizaciones o asistencia, escríbenos o llámanos. Nuestro equipo responde con atención personalizada.</p>
+      </div>
+
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <div class="box">
+          <div style="color:var(--muted); font-size:13px;">Teléfono</div>
+          <a class="tel" href="tel:+529981682230" style="font-weight:700; color:var(--white); text-decoration:none;">998 168 2230</a>
+        </div>
+
+        <div class="box">
+          <div style="color:var(--muted); font-size:13px;">Correo</div>
+          <a href="mailto:ventas@cortafacilpro.com" style="color:var(--muted); text-decoration:underline;">ventas@cortafacilpro.com</a>
+        </div>
+
+        <div class="box" style="min-width:220px;">
+          <div style="color:var(--muted); font-size:13px;">Instagram</div>
+          <a href="https://www.instagram.com/cortafacil_pro" target="_blank" style="color:var(--white); text-decoration:underline;">@cortafacil_pro</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Corta-Fácil Pro — Todos los derechos reservados. | Material de proyecto académico.
+      <div style="margin-top:8px; color:var(--muted); font-size:13px;">Referencias APA (ejemplo): ver sección final del código para format. </div>
+    </footer>
+  </main>
+
+  <!-- Mini carrito visible -->
+  <div class="mini-cart" id="miniCart" aria-live="polite" aria-atomic="true">
+    <h4>Carrito</h4>
+    <div class="cart-list" id="cartList"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div style="color:var(--muted)">Total: <strong id="cartTotal">MX$0</strong></div>
+      <div>
+        <button class="btn secondary" id="clearCart">Vaciar</button>
+        <button class="btn" id="checkout">Comprar ahora</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de checkout -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Finalizar pedido (simulación)</h3>
+      <p id="modalDesc" style="color:var(--muted)">Revisa tus datos y confirma — esto es una simulación.</p>
+
+      <div style="margin-top:8px;">
+        <label style="display:block; margin-bottom:8px;">
+          Nombre
+          <input id="buyerName" placeholder="Tu nombre completo" />
+        </label>
+        <label style="display:block; margin-bottom:8px;">
+          Teléfono
+          <input id="buyerPhone" placeholder="998 123 4567" />
+        </label>
+        <label style="display:block; margin-bottom:8px;">
+          Dirección (opcional)
+          <input id="buyerAddress" placeholder="Calle, número, colonia" />
+        </label>
+      </div>
+
+      <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
+        <button class="btn secondary" id="cancelModal">Cancelar</button>
+        <button class="btn" id="confirmOrder">Confirmar pedido (simulado)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Cart logic
+    const cart = {};
+    const productEls = document.querySelectorAll('.card[data-id]');
+    const miniCart = document.getElementById('miniCart');
+    const cartList = document.getElementById('cartList');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const openCartBtn = document.getElementById('open-cart');
+    const clearCartBtn = document.getElementById('clearCart');
+    const checkoutBtn = document.getElementById('checkout');
+    const modal = document.getElementById('modal');
+    const buyerName = document.getElementById('buyerName');
+    const buyerPhone = document.getElementById('buyerPhone');
+    const buyerAddress = document.getElementById('buyerAddress');
+
+    // Initialize product catalogue map
+    const products = {};
+    document.querySelectorAll('.card[data-id]').forEach(card=>{
+      const id = card.getAttribute('data-id');
+      products[id] = {
+        id,
+        name: card.getAttribute('data-name') || (card.querySelector('h3')?.textContent || 'Producto'),
+        price: Number(card.getAttribute('data-price') || 0),
+        img: card.querySelector('img')?.src || '',
+      };
+    });
+
+    function updateCartUI(){
+      // count
+      const keys = Object.keys(cart);
+      let total = 0;
+      cartList.innerHTML = '';
+      keys.forEach(k=>{
+        const item = cart[k];
+        const div = document.createElement('div'); div.className='cart-item';
+        div.innerHTML = '<img src="'+item.img+'" alt=""><div style="flex:1"><div style="font-weight:700">'+item.name+'</div><div style="color:var(--muted); font-size:13px;">MX$'+item.price+' x '+item.qty+'</div></div><div><button class="btn secondary" data-remove="'+k+'">-</button></div>';
+        cartList.appendChild(div);
+        total += item.price * item.qty;
+      });
+      cartTotalEl.textContent = 'MX$' + total.toFixed(2);
+      openCartBtn.textContent = 'Carrito ('+keys.reduce((s,k)=>s+cart[k].qty,0)+')';
+    }
+
+    // Add to cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const id = e.currentTarget.getAttribute('data-id');
+        const p = products[id];
+        if(!cart[id]) cart[id] = {...p, qty:0};
+        cart[id].qty += 1;
+        // show mini cart
+        miniCart.classList.add('show');
+        updateCartUI();
+      });
+    });
+
+    // Remove / decrement
+    cartList.addEventListener('click', e=>{
+      const rem = e.target.getAttribute('data-remove');
+      if(!rem) return;
+      if(cart[rem]){
+        cart[rem].qty -= 1;
+        if(cart[rem].qty <= 0) delete cart[rem];
+        updateCartUI();
+      }
+    });
+
+    // open/close cart button
+    openCartBtn.addEventListener('click', ()=>{
+      miniCart.classList.toggle('show');
+    });
+
+    clearCartBtn.addEventListener('click', ()=>{
+      for(const k in cart) delete cart[k];
+      updateCartUI();
+      miniCart.classList.remove('show');
+    });
+
+    checkoutBtn.addEventListener('click', ()=>{
+      // Open modal
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      buyerName.focus();
+    });
+
+    // Modal cancel
+    document.getElementById('cancelModal').addEventListener('click', ()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    // Confirm order (simulado)
+    document.getElementById('confirmOrder').addEventListener('click', ()=>{
+      const name = buyerName.value.trim();
+      const phone = buyerPhone.value.trim();
+      if(!name || !phone){
+        alert('Por favor completa tu nombre y teléfono para finalizar (simulación).');
+        return;
+      }
+      // Build summary
+      let summary = 'Pedido simulado:\\nNombre: ' + name + '\\nTel: ' + phone + '\\n\\nProductos:\\n';
+      let total = 0;
+      for(const k in cart){
+        summary += cart[k].name + ' x ' + cart[k].qty + ' — MX$' + (cart[k].price * cart[k].qty).toFixed(2) + '\\n';
+        total += cart[k].price * cart[k].qty;
+      }
+      summary += '\\nTotal (simulado): MX$' + total.toFixed(2);
+      modal.classList.remove('show');
+      // simulate server action
+      setTimeout(()=> {
+        alert(summary + '\\n\\nGracias — nuestro equipo te contactará (simulación).');
+        // empty cart
+        for(const k in cart) delete cart[k];
+        updateCartUI();
+        miniCart.classList.remove('show');
+      }, 300);
+    });
+
+    // click outside modal to close
+    modal.addEventListener('click', (e)=>{
+      if(e.target === modal){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+
+    // keyboard Esc to close
+    window.addEventListener('keydown', e=>{
+      if(e.key === 'Escape'){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+      }
+    });
+
+    // initial update
+    updateCartUI();
+
+    // small enhancement: open cart when item added
+    (function attachAddHandlers(){
+      document.querySelectorAll('.add-to-cart').forEach(btn=>{
+        btn.addEventListener('click', ()=> {
+          miniCart.classList.add('show');
+        });
+      });
+    })();
+
+    // accessibility: focus trap and small tweaks could be added later.
+  </script>
+
+  <!-- APA references example (puedes expandir en tu entrega) -->
+  <!--
+  Referencias (APA 7) - ejemplos:
+  - Instituto Nacional de Estadística y Geografía. (2020). Datos sobre consumo alimentario en México. https://www.inegi.org.mx
+  - Corta-Fácil Pro. (2025). Imagen publicitaria. Copyright Corta-Fácil Pro.
+  - OpenAI. (2024). ChatGPT [Modelo de lenguaje]. https://openai.com
+  -->
+
+</body>
+</html>
